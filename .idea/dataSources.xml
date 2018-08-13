@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="jdbc:hsqldb:file:C:/Users/zoom1/Google Drive/Studies/Workshop in Advanced programming - 20503/materials/exam system versions/examsystembit\./" uuid="359c897e-987d-429d-ada0-82a4c31da4a2">
+      <driver-ref>hsqldb.local</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:hsqldb:file:$PROJECT_DIR$/../examsystembit\./</jdbc-url>
+    </data-source>
+  </component>
+</project>

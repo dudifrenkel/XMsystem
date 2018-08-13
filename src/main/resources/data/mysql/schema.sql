@@ -8,8 +8,8 @@ CREATE TABLE `examinee` (
   `id` INT UNSIGNED NOT NULL UNIQUE auto_increment,
   `first_name` varchar(45) DEFAULT NULL,
   `last_name` varchar(45) DEFAULT NULL,
---   `birth_date` date DEFAULT NULL,
---   `sex` ENUM('M', 'F') NOT NULL,
+  `birth_date` date DEFAULT NULL,
+  `sex` ENUM('M', 'F') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 

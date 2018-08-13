@@ -11,43 +11,31 @@ import java.util.List;
 public class ExamineeController {
 
     @Autowired
-    private ExamineeRepository examineeRepository;
     private ExamineeService examineeService;
-
-    @GetMapping(path = "/")
-    public @ResponseBody String hi(){
-        return "hi";
-    }
-    @GetMapping(path = "/all2")
-    public @ResponseBody List<Examinee> getAllExaminees(){
-        return examineeService.getAllExaminees();
-//        return (List<Examinee>) examineeRepository.findAll();
-    }
 
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Examinee> getAll(){
-        return examineeRepository.findAll();
+        return examineeService.getAllExaminees();
+    }
+
+    @GetMapping(path="/searchName/{firstName_lastName}")
+    public @ResponseBody
+    List<Examinee> getExamineeByName(@PathVariable String firstName_lastName){
+        // TODO format check for inputs
+        String[] name = firstName_lastName.split("_");
+        return examineeService.getExamineeByName(name[0],name[1]);
+    }
+
+    @GetMapping(path="/searchId/{id}")
+    public @ResponseBody
+    Examinee getExaminee(@PathVariable String id){
+        return examineeService.getExaminee(id);
     }
 
     @PostMapping(path="/add") // Map ONLY post Requests
-    public @ResponseBody String addNewUser (@RequestParam String id
-            , @RequestParam String firstName, @RequestParam String lastName) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
-
-        Examinee n = new Examinee(Integer.valueOf(id),firstName,lastName);
-//        n.setId(id);
-//        n.setFirstName(firstName);
-//        n.setLastName(lastName);
-        examineeRepository.save(n);
+    public @ResponseBody String addNewUser (@RequestBody Examinee examinee){
+        // TODO: 01/08/2018 format check for inputs
+        examineeService.addExaminee(examinee);
         return "Saved";
     }
-
-    @GetMapping(path="/init") // Map ONLY GET Requests
-    public String init(){
-        examineeService.init();
-        return "done";
-    }
-
-
 }

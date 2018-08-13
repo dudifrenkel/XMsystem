@@ -1,29 +1,34 @@
 package com.XMsystem.Examinee;
 
+import com.XMsystem.Tester.Tester;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.io.Serializable;
 
 @Entity // This tells Hibernate to make a table out of this class
-public class Examinee {
+public class Examinee implements Serializable {
 
     @Id//@GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
-
     private String firstName;
-
     private String lastName;
-//    private String birthDate;
-//    private Character sex;
+    private String birthDate;
+    private Character sex;
+    @ManyToOne
+    private Tester currTester;
 
     public Examinee(){ }
 
-    public Examinee(Integer id, String firstName, String lastName/*, String dateOfBirth, Character gender*/) {
+    public Examinee(Integer id, String firstName, String lastName, String dateOfBirth, Character gender) {
         super();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-//        this.birthDate = dateOfBirth;
-//        this.sex = gender;
+        this.birthDate = dateOfBirth;
+        this.sex = gender;
     }
 
     public Integer getId() {
@@ -49,7 +54,7 @@ public class Examinee {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-/*
+
     public String getBirthDate() {
         return birthDate;
     }
@@ -64,5 +69,5 @@ public class Examinee {
 
     public void setSex(Character sex) {
         this.sex = sex;
-    }*/
+    }
 }
