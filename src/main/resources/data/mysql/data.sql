@@ -35,3 +35,7 @@ INSERT INTO `xmdb`.`answer` (`id`, `content`, `is_true`, `question_id`) VALUES
 
 INSERT INTO `xmdb`.`tester` (`id`) VALUES
 	('999');
+
+INSERT INTO `xmdb`.`test` (`id`, `description`) VALUES ('1', 'מבחן לדוגמה');
+
+INSERT INTO `xmdb`.`questionnaire` (`id`, `duration_min`) VALUES ('1', '30');
