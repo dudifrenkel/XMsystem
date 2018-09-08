@@ -12,7 +12,8 @@ import java.util.Set;
 public class Question implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue()
+//    @GeneratedValue(strategy=GenerationType.AUTO)
     Long id;
     String body;
 

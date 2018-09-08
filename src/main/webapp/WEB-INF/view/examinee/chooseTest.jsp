@@ -1,44 +1,27 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="he">
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<head>
+
+</head>
+<body dir="rtl">
 
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<h1> היי ${examinee.firstName}, אנא בחר מבחן: </h1>
 
+<form:form method="post" modelAttribute="examinee" action="begin">
+    <p> מבחן: <form:select path="currTest">
+        <c:forEach items="${tests}" var="test">
+            <form:option value="${test.id}" label="${test.description}"></form:option>
+        </c:forEach>
+    </form:select></p>
 
-<c:set var="path" value="${pageContext.request.contextPath}"></c:set>
+    <button type="submit" name="הרשם"> התחל מבחן! </button>
+</form:form>
 
+</body>
 
-    <head>
-        <title>רישום נבחן</title>
-    </head>
-    <body>
-
-        <form:form method="post" action="add" modelAttribute ="examinee" >
-            <p>מספר תעודת זהות: <form:input path="taz" placeholder="הכנס ת.ז"/></p>
-            <p>שם פרטי: <form:input path="firstName" placeholder="הכנס שם פרט"/></p>
-            <p>שם משפחה: <form:input path="lastName" placeholder="הכנס שם משפחה"/></p>
-            <p>תאריך לידה: <form:input path="birthDate" placeholder="הכנס תאריך לידה"/></p>
-            <p> מין: <form:select name="sex" id="" path="sex">
-                <form:option value="M" name="זכר"/>
-                <form:option value="F" name="נקבה"/></p>
-            </form:select>
-            <form:button value="sign" name="הרשם">הרשם</form:button>
-        </form:form>
-
-
-        <form:form method="post" action="chooseTest" modelAttribute ="test">
-        <p> מבחן: <form:select path="tests">
-            <c:forEach items="${tests}" var="test">
-                <form:option name="${test.id}" value="${test.description}"></form:option>
-            </c:forEach>
-        </form:select></p>
-            <form:button value="choose">בחר</form:button>
-        </form:form>
-
-
-    </body>
 </html>

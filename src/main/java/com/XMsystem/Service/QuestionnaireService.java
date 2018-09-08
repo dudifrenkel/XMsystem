@@ -5,32 +5,41 @@ import com.XMsystem.Repository.QuestionnaireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class QuestionnaireService {
 
     @Autowired
-    private QuestionnaireRepository questionRepository;
+    private QuestionnaireRepository questionnaireRepository;
 
-    public List<Questionnaire> getAllQuestions(){
-        List<Questionnaire> questions = new ArrayList<>();
-        questionRepository.findAll().forEach(questions::add);
-        return questions;
+    public List<Questionnaire> getAllquestionnaires(){
+        List<Questionnaire> questionnaires = new ArrayList<>();
+        questionnaireRepository.findAll().forEach(questionnaires::add);
+        return questionnaires;
     }
 
-    public void addQuestion (Questionnaire question){
-        questionRepository.save(question);
+    public void addQuestionnaire (Questionnaire questionnaire){
+        questionnaireRepository.save(questionnaire);
     }
 
-    public Questionnaire getQuestion(String id) {
-        Optional<Questionnaire> question = questionRepository.findById(Long.valueOf(id));
-        if(question.isPresent()){
-            return question.get();
+    public Questionnaire getQuestionnaire(String id) {
+        Optional<Questionnaire> questionnaire = questionnaireRepository.findById(Long.valueOf(id));
+        if(questionnaire.isPresent()){
+            return questionnaire.get();
         }
         return null;
     }
 
+
+    public void deleteById(String id) {
+        questionnaireRepository.deleteById(Long.valueOf(id));
+    }
+
+    public Map<Long,String> getAllQuesDiscriptions(){
+        Map<Long,String> qnnaires = new HashMap<>();
+        questionnaireRepository.findAll().forEach(qnnaire->qnnaires.put(
+                                                        qnnaire.getId(),qnnaire.getDescription()));
+        return qnnaires;
+    }
 }

@@ -1,26 +1,37 @@
 <!DOCTYPE html>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 
 <c:set var="path" value="${pageContext.request.contextPath}"></c:set>
 
-<html lang="en">
+<html lang="he">
 <head>
-<title> Examinee sign up </title>
+    <title> התחברות </title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
-<body>
-    <div th:if="${param.error}">
-        Invalid username and password.
-        <h2>cccdd</h2>
-    </div>
-    <div th:if="${param.logout}">
-        You have been logged out.
-    </div>
-    <form th:th:action="@{/login}" method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Sign In"/></div>
-    </form>
+
+<body dir="rtl">
+    <h3> התחברות למנהלים </h3>
+    <form:form action="${path}/authTheUser" method="post">
+
+        <c:if test="${param.error != null}">
+            <i class="error"> שם משתמש / סיסמה שגויים </i>
+        </c:if>
+
+        <p>
+            שם משתמש: <input type="text" name="username"/>
+        </p>
+
+        <p>
+            סיסמה: <input type="password" name="password"/>
+        </p>
+        <input type="submit" value="התחבר">
+    </form:form>
 </body>
 </html>

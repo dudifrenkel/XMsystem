@@ -24,10 +24,10 @@ public class QuestionController {
         return questionService.getQuestion(id);
     }
 
-    @PostMapping(path="/add") // Map ONLY post Requests
-    public @ResponseBody String addNewQuestion (@RequestBody Question question){
-        // TODO: 01/08/2018 format check for inputs
-        questionService.addQuestion(question);
-        return "Saved";
-    }
+//    @PostMapping(path="/add") // Map ONLY post Requests
+//    public @ResponseBody String addNewQuestion (@RequestBody Question question){
+//        // TODO: 01/08/2018 format check for inputs
+//        questionService.addQuestion(question);
+//        return "Saved";
+//    }
 }

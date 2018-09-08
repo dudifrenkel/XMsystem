@@ -8,22 +8,22 @@ import java.io.Serializable;
 public class Answer implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     private String content;
-    private boolean isTrue;
+    private boolean isCorrect;
 
     @ManyToOne
-    @JoinColumn(name = "question_id", nullable = false)
+    @JoinColumn(name = "question_id")
     private Question question;
 
     public Answer(){}
 
-    public Answer(String content, boolean isTrue) {
+    public Answer(String content, boolean isCorrect) {
         super();
         this.content = content;
-        this.isTrue = isTrue;
+        this.isCorrect = isCorrect;
     }
 
     public Long getId() {
@@ -42,12 +42,12 @@ public class Answer implements Serializable {
         this.content = content;
     }
 
-    public boolean isTrue() {
-        return isTrue;
+    public boolean isCorrect() {
+        return isCorrect;
     }
 
-    public void setTrue(boolean aTrue) {
-        isTrue = aTrue;
+    public void setCorrect(boolean correct) {
+        isCorrect = correct;
     }
 
     public Question getQuestion() {

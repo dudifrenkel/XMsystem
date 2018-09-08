@@ -1,7 +1,20 @@
-h1{
-    color:#0000FF;
-}
+/*h1{*/
+    /*color:#0000FF;*/
+/*}*/
 
 h2{
     color:#FF0000;
 }
+
+
+h1{
+    color: red;
+}
+
+br{
+    margin:0px;
+    padding:0px;
+    font-size:30px;
+}
+
+

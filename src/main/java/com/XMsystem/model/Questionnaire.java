@@ -3,30 +3,28 @@ package com.XMsystem.Model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "Questionnaire")
 public class Questionnaire implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String description;
     private Integer durationMin;
 
-    @ManyToMany(/*cascade = {CascadeType.ALL*}*/)
+    @ManyToMany()
     @JoinTable(
-            name = "Questionnaire_Question",
+            name = "questionnaire_question",
             joinColumns = {@JoinColumn(name = "questionnaire_id")},
             inverseJoinColumns = {@JoinColumn(name = "question_id")}
     )
     private List<Question> questions = new ArrayList<>();
 
     @ManyToMany(mappedBy = "questionnaires")
-    private Set<Test> tests = new HashSet<>();
+    private List<Test> tests = new ArrayList<>();
 
     public Questionnaire() {
     }
@@ -42,6 +40,18 @@ public class Questionnaire implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getDurationMin() {
@@ -60,19 +70,18 @@ public class Questionnaire implements Serializable {
         this.questions = questions;
     }
 
-    public Set<Test> getTests() {
+    public List<Test> getTests() {
         return tests;
     }
 
-    public void setTests(Set<Test> tests) {
+    public void setTests(List<Test> tests) {
         this.tests = tests;
     }
 
-    public void addQuestion(Question question){
-        this.questions.add(question);
-    }
-
-    public void removeQuestion(Long id){
-        questions.removeIf(question -> question.getId()==id);
+    @PreRemove
+    private void removeQuestionnaireFromTests() {
+        for (Test test : tests) {
+            test.getQuestionnaires().remove(this);
+        }
     }
 }

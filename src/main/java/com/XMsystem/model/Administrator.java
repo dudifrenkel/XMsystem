@@ -1,22 +1,25 @@
 package com.XMsystem.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Administrator {
+public class Administrator{
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
-    private String user;
+    private String userName;
     private String password;
 
-    public Administrator(String user, String password) {
-        this.user = user;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    public Administrator(){}
+
+    public Administrator(String userName, String password) {
+        this.userName = userName;
         this.password = password;
     }
 
@@ -28,12 +31,12 @@ public class Administrator {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -42,5 +45,13 @@ public class Administrator {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

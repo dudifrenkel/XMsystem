@@ -11,11 +11,11 @@ import java.util.List;
 public class Test implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue()
     Long id;
     String description;
 
-    @ManyToMany(/*cascade = {CascadeType.ALL}*/)
+    @ManyToMany()
     @JoinTable(
             name = "Test_Questionnaire",
             joinColumns = {@JoinColumn(name = "test_id")},
@@ -23,8 +23,8 @@ public class Test implements Serializable {
     )
     List<Questionnaire> questionnaires = new ArrayList<>();
 
-//    @ManyToMany
-//    List<Tester> testers = new ArrayList<>();
+    @ManyToMany(mappedBy = "tests" )
+    List<Tester> testers = new ArrayList<>();
 
     public Test() { }
 
@@ -52,13 +52,13 @@ public class Test implements Serializable {
         this.questionnaires = questionnaires;
     }
 
-//    public List<Tester> getActiveOnTesters() {
-//        return testers;
-//    }
-//
-//    public void setTesters(List<Tester> testers) {
-//        this.testers = testers;
-//    }
+    public List<Tester> getTesters() {
+        return testers;
+    }
+
+    public void setTesters(List<Tester> testers) {
+        this.testers = testers;
+    }
 
     public void addQuestionnaires(Questionnaire q){
         this.questionnaires.add(q);
@@ -66,5 +66,24 @@ public class Test implements Serializable {
 
     public void removeQuestionnaires(Long id){
         this.questionnaires.removeIf(questionnaire -> questionnaire.getId()==id);
+    }
+
+    public void addTester(Tester tester){
+        this.testers.add(tester);
+    }
+
+    public List<String> getQnnaireIds(){
+        List<String> qnnaireIds = new ArrayList<>();
+        for (Questionnaire qnnaire:this.questionnaires) {
+            qnnaireIds.add(qnnaire.getId().toString());
+        }
+        return qnnaireIds;
+    }
+
+    @PreRemove
+    private void removeTestFromTesters() {
+        for (Tester tester : testers) {
+            tester.getTests().remove(this);
+        }
     }
 }

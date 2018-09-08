@@ -14,9 +14,15 @@ public class Tester {
     String password;
 
     @ManyToMany
+    @JoinTable(
+            name = "Tester_tests",
+            joinColumns = {@JoinColumn(name = "tester_id")},
+            inverseJoinColumns = {@JoinColumn(name = "test_id")}
+    )
+//    List<Test> tests = new ArrayList<>();
     Set<Test> tests = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     Set<Examinee> examinees = new HashSet<>();
 
     public Long getId() {
@@ -39,6 +45,14 @@ public class Tester {
         this.password = password;
     }
 
+//    public List<Test> getTests() {
+//        return tests;
+//    }
+//
+//    public void setTests(List<Test> tests) {
+//        this.tests = tests;
+//    }
+
     public Set<Test> getTests() {
         return tests;
     }
@@ -53,5 +67,9 @@ public class Tester {
 
     public void setExaminees(Set<Examinee> examinees) {
         this.examinees = examinees;
+    }
+
+    public void removeTest(Long id){
+        this.tests.remove(id);
     }
 }
