@@ -3,6 +3,7 @@
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 
 <html>
@@ -69,7 +70,7 @@
 
     <h1> הוספת שאלה חדשה </h1>
         <hr>
-            <form id="questionForm" name="questionForm" method="post" action="addQuestion" >
+            <form:form id="questionForm" name="questionForm" method="post" action="addQuestion" modelAttribute="question">
                 <p> גוף השאלה <input size="130" type="text" name="body" placeholder="גוף השאלה" required="true" /></p>
                 <p>
                     מס' התשובה הנכונה
@@ -85,7 +86,7 @@
                 <button id="rmvQues" type="button" onclick="textBoxDelete()"> הסר תשובה </button>
 
                 <br><br>
-                <button type="submit" id="submitBtn"> הוסף שאלה </button>
-        </form>
+                <form:button type="submit" id="submitBtn"> הוסף שאלה </form:button>
+        </form:form>
     </body>
 </html>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%--#95C7D8--%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -26,17 +27,6 @@
         .nav-link{
             color: #95C7D8;
         }
-        /*.row{*/
-            /*padding-top: 100px;*/
-        /*}*/
-        /*h1{*/
-            /*color: blue;*/
-            /*font-family: Aharoni;*/
-            /*font-size: 60px;*/
-        /*}*/
-        /*.examinees{*/
-            /*color: #FF0000;*/
-        /*}*/
     </style>
 
 </head>
@@ -46,7 +36,7 @@
         <nav class="navbar navbar-expand-sm bg-white navbar-white fixed-top">
             <!-- Brand/logo -->
             <a class="navbar-brand" href="/">
-                <img src="images/xmlogo.jpg" alt="logo" style="width:60px;">
+                <img src="${path}/images/xmlogo.jpg" alt="logo" style="width:60px;">
             </a>
 
             <!-- Links -->
@@ -73,7 +63,7 @@
 
         <div class="row" align="center">
             <div class="logo">
-                <img src="/images/xm.jpg" style="width:500px;">
+                <img src="${path}/images/xm.jpg" style="width:500px;">
             </div>
         </div>
 
@@ -84,7 +74,6 @@
                         כניסת נבחנים
                     </h3>
                 </a>
-                    <%--#95C7D8--%>
             </div>
         </div>
 

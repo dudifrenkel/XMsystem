@@ -11,7 +11,6 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
@@ -22,7 +21,8 @@ import java.util.Map;
 @RequestMapping(value = "/examinee")
 public class ExamineeController {
 
-
+    @Autowired
+    TestService testService;
 
     private final ExamineeService examineeService;
     private final TesterService testerService;
@@ -31,9 +31,6 @@ public class ExamineeController {
     private final QuestionnaireResponseService questionnaireResponseService;
     private final ExamineeAnswerService examineeAnswerService;
     private final AnswerService answerService;
-
-    @Autowired
-    private TestService testService;
 
     public ExamineeController(ExamineeService examineeService, TesterService testerService,
                               TestResponseService testResponseService, QuestionnaireService
@@ -49,14 +46,6 @@ public class ExamineeController {
         this.answerService = answerService;
     }
 
-    @Autowired
-
-
-    //    @RequestMapping("examineeEntrance")
-//    public String welcomeExaminee() {
-//        return "examinee/examineeWelcome";
-//    }
-//
     @ModelAttribute("examinee")
     public Examinee getExaminee () {
         return new Examinee();
@@ -64,34 +53,13 @@ public class ExamineeController {
 
     @RequestMapping("examineeEntrance")
     public String createExamineePage(Model model) {
-//        model.addAttribute("examinee",new Examinee());
         model.addAttribute("testers",testerService.getAlltestersNames());
         return "examinee/examineeSignup";
     }
-//
-//    @GetMapping(path = "/all")
-//    public @ResponseBody Iterable<Examinee> getAll(){
-//        return examineeService.getAllExaminees();
-//    }
-//
-//    @GetMapping(path="/searchName/{firstName_lastName}")
-//    public @ResponseBody
-//    List<Examinee> getExamineeByName(@PathVariable String firstName_lastName){
-//        // TODO format check for inputs
-//        String[] name = firstName_lastName.split("_");
-//        return examineeService.getExamineeByName(name[0],name[1]);
-//    }
-//
-//    @GetMapping(path="/searchId/{id}")
-//    public @ResponseBody
-//    Examinee getExaminee(@PathVariable String id){
-//        return examineeService.getExaminee(id);
-//    }
 
-    @PostMapping(path="/add") // Map ONLY post Requests
+    @PostMapping(path="/add")
     public String addNewExaminee (
             @Valid @ModelAttribute("examinee") Examinee examinee, BindingResult bindingResult, Model model){
-
         if(bindingResult.hasErrors()){
             return "examinee/examineeSignup";
         }
@@ -100,6 +68,24 @@ public class ExamineeController {
         return "/examinee/chooseTest";
     }
 
+    //Todo: TESTTTTT!
+    @GetMapping(path="/begin")
+    public String InitTest11 (//@ModelAttribute("examinee") Examinee examinee,
+                              Model model) {
+        /* Setting the examinee the response */
+        TestResponse testResponse = new TestResponse(LocalDateTime.now().toString());
+        Examinee examinee = examineeService.getExaminee("244");
+        examinee.setCurrTest(testService.getTestById("387"));
+        testResponse.setDescription(examinee.getCurrTest().getDescription());
+
+        testResponse.setExaminee(examinee);
+        List<String> qnnairesTestList = examinee.getCurrTest().getQnnaireIds();
+        Iterator<String> iterator = qnnairesTestList.iterator();
+        model.addAttribute("qnnaireIterator",iterator);
+        model.addAttribute("tRes",testResponse);
+
+        return "redirect:questionnairePage";
+    }
     @PostMapping(path="/begin")
     public String InitTest1 (@ModelAttribute("examinee") Examinee examinee,
                              Model model){
@@ -108,40 +94,12 @@ public class ExamineeController {
         testResponse.setDescription(examinee.getCurrTest().getDescription());
         testResponse.setExaminee(examinee);
 
-//        testResponseService.addTestResponse(testResponse);
-//        examinee.addTestRes(testResponse);
-
         List<String> qnnairesTestList = examinee.getCurrTest().getQnnaireIds();
         Iterator<String> iterator = qnnairesTestList.iterator();
         model.addAttribute("qnnaireIterator",iterator);
         model.addAttribute("tRes",testResponse);
 
         return "redirect:questionnairePage";
-
-    }
-
-    //Todo: TESTTTTT!
-    @GetMapping(path="/begin")
-    public String InitTest11 (//@ModelAttribute("examinee") Examinee examinee,
-                             Model model){
-        /* Setting the examinee the response */
-        TestResponse testResponse = new TestResponse(LocalDateTime.now().toString());
-        Examinee examinee = examineeService.getExaminee("244");
-        examinee.setCurrTest(testService.getTestById("308"));
-        testResponse.setDescription(examinee.getCurrTest().getDescription());
-
-        testResponse.setExaminee(examinee);
-
-//        testResponseService.addTestResponse(testResponse);
-//        examinee.addTestRes(testResponse);
-
-        List<String> qnnairesTestList = examinee.getCurrTest().getQnnaireIds();
-        Iterator<String> iterator = qnnairesTestList.iterator();
-        model.addAttribute("qnnaireIterator",iterator);
-        model.addAttribute("tRes",testResponse);
-
-        return "redirect:questionnairePage";
-
     }
 
     @GetMapping(path="/questionnairePage")
@@ -153,7 +111,6 @@ public class ExamineeController {
             String qnnaireId = iterator.next();
             Questionnaire currQnnaire = questionnaireService.getQuestionnaire(qnnaireId);
             model.addAttribute("currQnnaire",currQnnaire);
-//            LocalDateTime startQuesTime =
             model.addAttribute("startQuesTime",LocalDateTime.now());
             return "examinee/questionnairePage";
         }
@@ -162,18 +119,7 @@ public class ExamineeController {
         status.setComplete();
         model.addAttribute("name",examinee.getFirstName());
         return "examinee/finish";
-//        return  qnnaireFormHelper(iterator, model);
     }
-
-//    private String qnnaireFormHelper(Iterator<String> iterator,Model model){
-//        if (iterator.hasNext()){
-//            String qnnaireId = iterator.next();
-//            Questionnaire currQnnaire = questionnaireService.getQuestionnaire(qnnaireId);
-//            model.addAttribute("currQnnaire",currQnnaire);
-//            return "examinee/questionnairePage";
-//        }
-//        return "examinee/finish";
-//    }
 
     @PostMapping(path="/processQnnaire")
     public  String processQnnaire (@RequestParam Map<String,String> formAnswers,
@@ -183,7 +129,6 @@ public class ExamineeController {
 
         /* handle questionnaire time by measure the time passed until the submit + 5 sec of delay */
         LocalDateTime endQuesTime = LocalDateTime.now();
-        handleQnnaireTime(startQuesTime,endQuesTime,tRes);
         Duration duration = Duration.between(startQuesTime,endQuesTime);
         Duration maxDealey = Duration.ofSeconds(5).plusMinutes(currQnnaire.getDurationMin());
         if (duration.compareTo(maxDealey)>0){   // In case of evil client the test will continue
@@ -198,6 +143,9 @@ public class ExamineeController {
 
         /* process the form - insert the examinee answers into the appropriate objects */
         for (Map.Entry<String,String> formAnswer : formAnswers.entrySet()) {
+            if (formAnswer.getKey().equals("_csrf")){
+                continue;
+            }
             answer = answerService.getQuestion(formAnswer.getValue());  // get the Question of the answer
             examineeAnswer = ansList.get(Long.valueOf(formAnswer.getKey()));    // get the examinee answer
             examineeAnswer.setAnswer(answer.getContent());  // set the examinee answer in examineeAnswer object
@@ -205,32 +153,10 @@ public class ExamineeController {
                examineeAnswer.setCorrect(true);
             }
         }
-
         qRes.calcCorrectQuestions();
         examineeAnswerService.addExamineeAnswer(qRes.getAnswers());
         questionnaireResponseService.addQuestionnaireResponse(qRes);
         tRes.setQnaaireResponse(qRes);
         return "redirect:questionnairePage";
     }
-
-    private void handleQnnaireTime(LocalDateTime startQuesTime, LocalDateTime endQuesTime, TestResponse tRes) {
-    }
-
-//    @RequestMapping(value = "processQnnaire/{answerId}", method = RequestMethod.GET)
-//    public String deleteTester(@PathVariable String answerId,
-//                               @ModelAttribute QuestionnaireResponse questionnaireResponse){
-//        Long questionId;
-//        ExamineeAnswer examineeAnswer = questionnaireResponse.setExaminneAnswer(answerId);
-//
-//        return "redirect:/admin/manageUsers";
-//    }
-
-
-//    @PostMapping(path="/add") // Map ONLY post Requests
-//    public @ResponseBody String addUser (@RequestBody Examinee examinee){
-//        // TODO: 01/08/2018 format check for inputs
-//        examineeService.addExaminee(examinee);
-//        return "Saved";
-//    }
-
 }

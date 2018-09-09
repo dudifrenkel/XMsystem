@@ -3,14 +3,10 @@ package com.XMsystem.Controller;
 import com.XMsystem.Model.*;
 import com.XMsystem.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +15,6 @@ import java.util.Map;
 @SessionAttributes({"admin","testerTestsList"})
 @RequestMapping(value = "/admin")
 public class AdminController {
-
 
     public static final String QUESTION_BODY_KEY = "body";
     public static final String CORRECT_ANSWER_PREFIX_KEY = "ans_";
@@ -46,9 +41,6 @@ public class AdminController {
         this.answerService = answerService;
         this.examineeService = examineeService;
     }
-
-    @Autowired
-
 
     @RequestMapping(value = "adminsEntrance")
     public String adminsEntrance() {
@@ -77,9 +69,9 @@ public class AdminController {
         return "admin/adminSignUp";
     }
 
-    @RequestMapping("createTester")
+    @GetMapping("createTester")
     public String createTesterPage(Model model) {
-        model.addAttribute("tester",new Tester());
+        model.addAttribute("tester", new Tester());
         model.addAttribute("tests", testService.getAlltestsDiscriptions());
         model.addAttribute("testerTestsList", new ArrayList<String>());
         return "admin/testerSignUp";
@@ -114,8 +106,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "addTester", method = RequestMethod.POST)
-    public String addTester(
-            @ModelAttribute("tester") Tester tester){
+    public String addTester(@ModelAttribute("tester") Tester tester){
 //        tester.setTests(testService.getTestsById(testerTestsList)); //TODO: add to each test the tester
         testerService.addTester(tester);
         return "redirect:manageUsers";
@@ -203,30 +194,9 @@ public class AdminController {
         return "admin/examineeDetails";
     }
 
-//    @RequestMapping(value = "delAdmin")
-//    public String deleteAdmin(@ModelAttribute String adminId){
-//        administratorService.deleteById(adminId);
-//        return "redirect:managerBoard";
-//    }
-//    @GetMapping(path="/searchName/{firstName_lastName}")
-//    public @ResponseBody
-//    List<Examinee> getExamineeByName(@PathVariable String firstName_lastName){
-//        // TODO format check for inputs
-//        String[] name = firstName_lastName.split("_");
-//        return examineeService.getExamineeByName(name[0],name[1]);
-//    }
-
     @GetMapping(path="/searchId/{id}")
     public @ResponseBody
     Administrator getAdministrator(@PathVariable String id){
         return administratorService.getAdministrator(id);
     }
-
-
-//    @PostMapping(path="/add") // Map ONLY post Requests
-//    public @ResponseBody String addUser (@RequestBody Examinee examinee){
-//        // TODO: 01/08/2018 format check for inputs
-//        examineeService.addExaminee(examinee);
-//        return "Saved";
-//    }
 }

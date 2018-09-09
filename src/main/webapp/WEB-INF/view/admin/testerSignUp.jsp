@@ -16,17 +16,18 @@
     <h1> הוספת בוחן חדש </h1>
     <hr>
     
-    <form action="addTester" method="post">
-        <p> שם משתמש: <form:input type="text" path="tester.userName" placeholder="הכנס שם משתמש"/></p>
+    <form:form action="addTester" method="post" id="addTester" name="addTester" modelAttribute="tester">
+        <p> שם משתמש: <form:input type="text" path="userName" placeholder="הכנס שם משתמש"/></p>
 
-        <p> סיסמה: <form:input type="password" path="tester.password" placeholder="הכנס סיסמה"/></p>
+        <p> סיסמה: <form:input type="password" path="password" placeholder="הכנס סיסמה"/></p>
 
         <c:forEach items="${tests}" var="test">
-            <form:checkbox path="tester.tests" value="${test.key}" label="${test.value}"></form:checkbox>
+            <form:checkbox path="tests" value="${test.key}" label="${test.value}"></form:checkbox>
         </c:forEach>
 
         <br><br>
-        <input type="submit" value="צור"/>
-    </form>
+        <%--<input type="submit" value="צור"/>--%>
+        <form:button type="submit" id="subBtn"> צור בוחן </form:button>
+    </form:form>
     </body>
 </html>
