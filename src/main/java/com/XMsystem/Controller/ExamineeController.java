@@ -53,7 +53,7 @@ public class ExamineeController {
 
     @RequestMapping("examineeEntrance")
     public String createExamineePage(Model model) {
-        model.addAttribute("testers",testerService.getAlltestersNames());
+        model.addAttribute("testers",testerService.getAllTestersNames());
         return "examinee/examineeSignup";
     }
 

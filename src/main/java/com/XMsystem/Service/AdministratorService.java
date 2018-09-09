@@ -19,12 +19,16 @@ import java.util.Optional;
 @Service
 public class AdministratorService implements UserDetailsService {
 
-    private AdministratorRepository administratorRepository;
-    private PasswordEncoder passwordEncoder;
+    private final AdministratorRepository administratorRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
-    public AdministratorService(AdministratorRepository administratorRepository, PasswordEncoder passwordEncoder) {
+    public static final String ADMIN_ROLE = "ADMIN";
+
+    public AdministratorService(AdministratorRepository administratorRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.administratorRepository = administratorRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
     public List<Administrator> getAllAdministrators(){
@@ -36,6 +40,7 @@ public class AdministratorService implements UserDetailsService {
     public Administrator addAdministrator (Administrator administrator){
         String encodedPassword = passwordEncoder.encode(administrator.getPassword());
         administrator.setPassword(encodedPassword);
+        administrator.setRole(roleService.getRoleByName(ADMIN_ROLE));
         return administratorRepository.save(administrator);
     }
 
@@ -53,7 +58,8 @@ public class AdministratorService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Administrator administrator = administratorRepository.findByUsername(username);
+        Administrator administrator = administratorRepository.findByUserName(username);
+
         if(administrator==null){
             throw new UsernameNotFoundException("User name "+username+" Not found");
         }
@@ -65,7 +71,7 @@ public class AdministratorService implements UserDetailsService {
 
     private Collection<GrantedAuthority> getGrantedAuthorities(Administrator administrator){
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        if (administrator.getRole().getName().equals("ADMIN")){
+        if (administrator.getRole().getName().equals(ADMIN_ROLE)){
             grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
         return grantedAuthorities;

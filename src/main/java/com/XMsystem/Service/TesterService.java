@@ -14,23 +14,23 @@ public class TesterService {
     @Autowired
     private TesterRepository testerRepository;
 
-    public List<Test> getTestsByTesterId(Long testerId){
-        return testerRepository.findTestsById(testerId);
-    }
+//    public List<Test> getTestsByTesterId(Long testerId){
+//        return testerRepository.findTestsById(testerId);
+//    }
+//
+//    //////////  deleteeeeeeee
+//    public Tester getTesterById(Long testerId){
+//        return testerRepository.findById(testerId).get();
+//    }
 
-    //////////  deleteeeeeeee
-    public Tester getTesterById(Long testerId){
-        return testerRepository.findById(testerId).get();
-    }
 
-
-    public List<Tester> getAlltesters(){
+    public List<Tester> getAllTesters(){
         List<Tester> testers = new ArrayList<>();
         testerRepository.findAll().forEach(testers::add);
         return testers;
     }
 
-    public Map<Long,String> getAlltestersNames(){
+    public Map<Long,String> getAllTestersNames(){
         Map<Long,String> testers = new HashMap<>();
         testerRepository.findAll().forEach(tester->testers.put(tester.getId(),tester.getUserName()));
         return testers;

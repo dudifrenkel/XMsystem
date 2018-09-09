@@ -50,7 +50,7 @@ public class AdminController {
     @RequestMapping(value = "manageUsers")
     public String showUserBoard(Model model) {
         model.addAttribute("admins", administratorService.getAllAdministrators());
-        model.addAttribute("testers", testerService.getAlltesters());
+        model.addAttribute("testers", testerService.getAllTesters());
         model.addAttribute("examinees", examineeService.getAllExaminees());
         return "admin/usersManagement";
     }
