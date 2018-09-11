@@ -3,7 +3,6 @@ package com.XMsystem.Service;
 import com.XMsystem.Model.Test;
 import com.XMsystem.Model.Tester;
 import com.XMsystem.Repository.TesterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,18 +10,11 @@ import java.util.*;
 @Service
 public class TesterService {
 
-    @Autowired
-    private TesterRepository testerRepository;
+    private final TesterRepository testerRepository;
 
-//    public List<Test> getTestsByTesterId(Long testerId){
-//        return testerRepository.findTestsById(testerId);
-//    }
-//
-//    //////////  deleteeeeeeee
-//    public Tester getTesterById(Long testerId){
-//        return testerRepository.findById(testerId).get();
-//    }
-
+    public TesterService(TesterRepository testerRepository) {
+        this.testerRepository = testerRepository;
+    }
 
     public List<Tester> getAllTesters(){
         List<Tester> testers = new ArrayList<>();

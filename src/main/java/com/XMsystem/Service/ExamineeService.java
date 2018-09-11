@@ -2,7 +2,6 @@ package com.XMsystem.Service;
 
 import com.XMsystem.Model.Examinee;
 import com.XMsystem.Repository.ExamineeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,8 +11,11 @@ import java.util.Optional;
 @Service
 public class ExamineeService {
 
-    @Autowired
-    private ExamineeRepository examineeRepository;
+    private final ExamineeRepository examineeRepository;
+
+    public ExamineeService(ExamineeRepository examineeRepository) {
+        this.examineeRepository = examineeRepository;
+    }
 
     public List<Examinee> getAllExaminees(){
         List<Examinee> examinees = new ArrayList<>();
@@ -33,7 +35,7 @@ public class ExamineeService {
         return null;
     }
 
-    public List<Examinee> getExamineeByName(String firstName, String lastName) {
-        return examineeRepository.findExamineesByFirstNameAndLastName(firstName,lastName);
-    }
+//    public List<Examinee> getExamineeByName(String firstName, String lastName) {
+//        return examineeRepository.findExamineesByFirstNameAndLastName(firstName,lastName);
+//    }
 }

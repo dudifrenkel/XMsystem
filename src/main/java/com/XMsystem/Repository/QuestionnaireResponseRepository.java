@@ -2,7 +2,8 @@ package com.XMsystem.Repository;
 
 import com.XMsystem.Model.QuestionnaireResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface QuestionnaireResponseRepository extends JpaRepository<QuestionnaireResponse, Long> {
+public interface QuestionnaireResponseRepository extends CrudRepository<QuestionnaireResponse, Long> {
 
 }

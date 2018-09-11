@@ -10,8 +10,11 @@ import java.util.*;
 @Service
 public class QuestionnaireService {
 
-    @Autowired
-    private QuestionnaireRepository questionnaireRepository;
+    private final QuestionnaireRepository questionnaireRepository;
+
+    public QuestionnaireService(QuestionnaireRepository questionnaireRepository) {
+        this.questionnaireRepository = questionnaireRepository;
+    }
 
     public List<Questionnaire> getAllquestionnaires(){
         List<Questionnaire> questionnaires = new ArrayList<>();

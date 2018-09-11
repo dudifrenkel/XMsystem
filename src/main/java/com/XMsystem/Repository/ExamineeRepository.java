@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ExamineeRepository extends CrudRepository<Examinee, Long> {
 
-    List<Examinee> findExamineesByFirstNameAndLastName(String firstName, String lastName);
+//    List<Examinee> findExamineesByFirstNameAndLastName(String firstName, String lastName);
 
 }

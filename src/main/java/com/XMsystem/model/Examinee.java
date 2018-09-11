@@ -1,8 +1,5 @@
 package com.XMsystem.Model;
 
-import org.springframework.data.repository.cdi.Eager;
-import org.springframework.web.context.annotation.SessionScope;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity // This tells Hibernate to make a table out of this class
+@Entity
 public class Examinee implements Serializable {
 
     @Id

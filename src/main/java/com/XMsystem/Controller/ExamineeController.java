@@ -2,7 +2,6 @@ package com.XMsystem.Controller;
 
 import com.XMsystem.Model.*;
 import com.XMsystem.Service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +20,8 @@ import java.util.Map;
 @RequestMapping(value = "/examinee")
 public class ExamineeController {
 
-    @Autowired
-    TestService testService;
+//    @Autowired
+//    TestService testService;
 
     private final ExamineeService examineeService;
     private final TesterService testerService;
@@ -68,26 +67,27 @@ public class ExamineeController {
         return "/examinee/chooseTest";
     }
 
-    //Todo: TESTTTTT!
-    @GetMapping(path="/begin")
-    public String InitTest11 (//@ModelAttribute("examinee") Examinee examinee,
-                              Model model) {
-        /* Setting the examinee the response */
-        TestResponse testResponse = new TestResponse(LocalDateTime.now().toString());
-        Examinee examinee = examineeService.getExaminee("244");
-        examinee.setCurrTest(testService.getTestById("387"));
-        testResponse.setDescription(examinee.getCurrTest().getDescription());
+//    //Todo: TESTTTTT!
+//    @GetMapping(path="/begin")
+//    public String InitTest11 (//@ModelAttribute("examinee") Examinee examinee,
+//                              Model model) {
+//        /* Setting the examinee the response */
+//        TestResponse testResponse = new TestResponse(LocalDateTime.now().toString());
+//        Examinee examinee = examineeService.getExaminee("244");
+//        examinee.setCurrTest(testService.getTestById("387"));
+//        testResponse.setDescription(examinee.getCurrTest().getDescription());
+//
+//        testResponse.setExaminee(examinee);
+//        List<String> qnnairesTestList = examinee.getCurrTest().getQnnaireIds();
+//        Iterator<String> iterator = qnnairesTestList.iterator();
+//        model.addAttribute("qnnaireIterator",iterator);
+//        model.addAttribute("tRes",testResponse);
+//
+//        return "redirect:questionnairePage";
+//    }
 
-        testResponse.setExaminee(examinee);
-        List<String> qnnairesTestList = examinee.getCurrTest().getQnnaireIds();
-        Iterator<String> iterator = qnnairesTestList.iterator();
-        model.addAttribute("qnnaireIterator",iterator);
-        model.addAttribute("tRes",testResponse);
-
-        return "redirect:questionnairePage";
-    }
     @PostMapping(path="/begin")
-    public String InitTest1 (@ModelAttribute("examinee") Examinee examinee,
+    public String InitTest (@ModelAttribute("examinee") Examinee examinee,
                              Model model){
         /* Setting the examinee the response */
         TestResponse testResponse = new TestResponse(LocalDateTime.now().toString());
@@ -146,7 +146,7 @@ public class ExamineeController {
             if (formAnswer.getKey().equals("_csrf")){
                 continue;
             }
-            answer = answerService.getQuestion(formAnswer.getValue());  // get the Question of the answer
+            answer = answerService.getAnswer(formAnswer.getValue());  // get the examinee's answer object
             examineeAnswer = ansList.get(Long.valueOf(formAnswer.getKey()));    // get the examinee answer
             examineeAnswer.setAnswer(answer.getContent());  // set the examinee answer in examineeAnswer object
             if(answer.isCorrect()){     // change the answer's correctness if true (false by default)
@@ -154,7 +154,7 @@ public class ExamineeController {
             }
         }
         qRes.calcCorrectQuestions();
-        examineeAnswerService.addExamineeAnswer(qRes.getAnswers());
+        examineeAnswerService.addExamineeAnswers(qRes.getAnswers());
         questionnaireResponseService.addQuestionnaireResponse(qRes);
         tRes.setQnaaireResponse(qRes);
         return "redirect:questionnairePage";

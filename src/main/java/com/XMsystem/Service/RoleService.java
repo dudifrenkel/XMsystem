@@ -27,20 +27,12 @@ public class RoleService{
         this.roleRepository = roleRepository;
     }
 
-    public Role addRole (Role role){
-        return roleRepository.save(role);
-    }
-
     public Role getRoleByName(String name){
         Role role = roleRepository.findByName(name);
         if(role != null){
             return role;
         }
         return null;
-    }
-
-    public void deleteById(String roleId) {
-        roleRepository.deleteById(Long.valueOf(roleId));
     }
 
 }

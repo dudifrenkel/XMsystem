@@ -29,7 +29,7 @@
 
             var min = '${currQnnaire.durationMin}';
             var sec = '0';
-            
+
             function examTimer() {
                 if (parseInt(sec) >0) {
 

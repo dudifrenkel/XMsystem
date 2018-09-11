@@ -13,20 +13,23 @@ import java.util.Optional;
 @Service
 public class AnswerService {
 
-    @Autowired
-    private AnswerRepository answerRepository;
+    private final AnswerRepository answerRepository;
 
-    public List<Answer> getAllQuestions(){
-        List<Answer> questions = new ArrayList<>();
-        answerRepository.findAll().forEach(questions::add);
-        return questions;
+    public AnswerService(AnswerRepository answerRepository) {
+        this.answerRepository = answerRepository;
     }
+
+    //    public List<Answer> getAllQuestions(){
+//        List<Answer> questions = new ArrayList<>();
+//        answerRepository.findAll().forEach(questions::add);
+//        return questions;
+//    }
 
     public void addAnswer (Answer answer){
         answerRepository.save(answer);
     }
 
-    public Answer getQuestion(String id) {
+    public Answer getAnswer(String id) {
         Optional<Answer> question = answerRepository.findById(Long.valueOf(id));
         if(question.isPresent()){
             return question.get();

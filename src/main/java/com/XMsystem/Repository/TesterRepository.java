@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface TesterRepository extends CrudRepository<Tester, Long> {
 
-    List<Test> findTestsById(Long testerId);
+//    List<Test> findTestsById(Long testerId);
 }

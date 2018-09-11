@@ -44,13 +44,13 @@ public class AdministratorService implements UserDetailsService {
         return administratorRepository.save(administrator);
     }
 
-    public Administrator getAdministrator(String id) {
-        Optional<Administrator> administrator = administratorRepository.findById(Long.valueOf(id));
-        if(administrator.isPresent()){
-            return administrator.get();
-        }
-        return null;
-    }
+//    public Administrator getAdministrator(String id) {
+//        Optional<Administrator> administrator = administratorRepository.findById(Long.valueOf(id));
+//        if(administrator.isPresent()){
+//            return administrator.get();
+//        }
+//        return null;
+//    }
 
     public void deleteById(String adminId) {
         administratorRepository.deleteById(Long.valueOf(adminId));

@@ -11,8 +11,8 @@ import java.util.*;
 @Service
 public class QuestionService {
 
-    private QuestionRepository questionRepository;
-    private AnswerService answerService;
+    private final QuestionRepository questionRepository;
+    private final AnswerService answerService;
 
     @Autowired
     public QuestionService(QuestionRepository questionRepository, AnswerService answerService) {
@@ -26,9 +26,6 @@ public class QuestionService {
         return questions;
     }
 
-//    public void addQuestion (Question question){
-//        questionRepository.save(question);
-//    }
 
     public Question getQuestion(String id) {
         Optional<Question> question = questionRepository.findById(Long.valueOf(id));

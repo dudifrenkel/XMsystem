@@ -28,7 +28,6 @@ public class AdminController {
     private final AnswerService answerService;
     private final ExamineeService examineeService;
 
-    @Autowired
     public AdminController(AdministratorService administratorService, TesterService testerService,
                            TestService testService, QuestionnaireService questionnaireService,
                            QuestionService questionService, AnswerService answerService,
@@ -107,11 +106,9 @@ public class AdminController {
 
     @RequestMapping(value = "addTester", method = RequestMethod.POST)
     public String addTester(@ModelAttribute("tester") Tester tester){
-//        tester.setTests(testService.getTestsById(testerTestsList)); //TODO: add to each test the tester
         testerService.addTester(tester);
         return "redirect:manageUsers";
     }
-
 
     @RequestMapping(value = "addQuestion", method = RequestMethod.POST)
     public String addQuestion(@RequestParam Map<String,String> param){
@@ -137,7 +134,6 @@ public class AdminController {
         return "redirect:manageTests";
     }
 
-
     @RequestMapping(value = "addQuestionnaire", method = RequestMethod.POST)
     public String addQuestionnaire(
             @ModelAttribute("questionnaire") Questionnaire questionnaire){
@@ -151,10 +147,10 @@ public class AdminController {
         return "redirect:manageTests";
     }
 
-    @GetMapping(path = "/all")
-    public @ResponseBody Iterable<Administrator> getAll(){
-        return administratorService.getAllAdministrators();
-    }
+//    @GetMapping(path = "/all")
+//    public @ResponseBody Iterable<Administrator> getAll(){
+//        return administratorService.getAllAdministrators();
+//    }
 
     @RequestMapping(value = "deleteAdmin/{adminId}", method = RequestMethod.GET)
     public String deleteAdmin(@PathVariable String adminId){
@@ -194,9 +190,9 @@ public class AdminController {
         return "admin/examineeDetails";
     }
 
-    @GetMapping(path="/searchId/{id}")
-    public @ResponseBody
-    Administrator getAdministrator(@PathVariable String id){
-        return administratorService.getAdministrator(id);
-    }
+//    @GetMapping(path="/searchId/{id}")
+//    public @ResponseBody
+//    Administrator getAdministrator(@PathVariable String id){
+//        return administratorService.getAdministrator(id);
+//    }
 }
